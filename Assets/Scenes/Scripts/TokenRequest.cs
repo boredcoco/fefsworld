@@ -12,6 +12,8 @@ public class TokenRequest : MonoBehaviour
     private const string ClientSecret = BuildConfig.SPOTIFY_CLIENT_SECRET;
     private const string RedirectUri = BuildConfig.SPOTIFY_REDIRECT_URI;
 
+    private string accessToken = "";
+
     public void RequestAccessToken(string authorizationCode)
     {
         string grantType = "authorization_code";
@@ -35,6 +37,7 @@ public class TokenRequest : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             string responseJson = request.downloadHandler.text;
+            accessToken = responseJson;
             // Parse the response JSON to retrieve the access token
             // and any other relevant information you may need
         }
