@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float xSpeed;
     [SerializeField] private float zSpeed;
+    [SerializeField] private float keyboardSensitivity = 0.5f;
 
     [SerializeField] private Rigidbody rb;
 
@@ -26,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetAxisRaw("Horizontal") != 0f || Input.GetAxisRaw("Vertical") != 0f)
         {
           currentDirection = transform.rotation * new Vector3(
-            Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")
+            Input.GetAxisRaw("Horizontal") * keyboardSensitivity, 0f, Input.GetAxisRaw("Vertical") * keyboardSensitivity
           );
         }
 
