@@ -13,6 +13,14 @@ public class PlayerMovement : MonoBehaviour
     private Camera mainCamera;
     private Vector3 currentDirection;
 
+    // code i copied off the internet
+    private float xRotation = 0.0f;
+    private float yRotation = 0.0f;
+    // horizontal rotation speed
+    public float horizontalSpeed = 1f;
+    // vertical rotation speed
+    public float verticalSpeed = 1f;
+
     private void Start()
     {
       mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
@@ -26,12 +34,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetAxisRaw("Horizontal") != 0f || Input.GetAxisRaw("Vertical") != 0f)
         {
-          currentDirection = transform.rotation * new Vector3(
-            Input.GetAxisRaw("Horizontal") * keyboardSensitivity, 0f, Input.GetAxisRaw("Vertical") * keyboardSensitivity
+          currentDirection = rb.rotation * new Vector3(
+            Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")
           );
         }
 
         rb.AddForce(newForce, ForceMode.VelocityChange);
+
+        Quaternion targetRotation = Quaternion.LookRotation(currentDirection);
+        Quaternion rotation = Quaternion.Slerp(rb.rotation, targetRotation, keyboardSensitivity * Time.deltaTime);
+        rb.MoveRotation(rotation);
 
         if (!Input.GetMouseButtonDown(0)) {
           return;
@@ -49,13 +61,6 @@ public class PlayerMovement : MonoBehaviour
         rb.rotation = rb.rotation * angle;
         Debug.Log(angle.eulerAngles);
         */
-    }
-
-    private void Update()
-    {
-      // look in the right direction
-      Quaternion targetRotation = Quaternion.LookRotation(currentDirection);
-      transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 0.15f);
     }
 
 }

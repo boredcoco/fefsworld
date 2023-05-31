@@ -215,8 +215,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xSpeed: 10
   zSpeed: 10
-  keyboardSensitivity: 0.001
+  keyboardSensitivity: 1
   rb: {fileID: 215092697}
+  horizontalSpeed: 1
+  verticalSpeed: 1
 --- !u!54 &215092697
 Rigidbody:
   m_ObjectHideFlags: 0
